@@ -1,7 +1,37 @@
 {% extends 'plans/base.html' %}
 {% block content %}
+
 <div class="container">
-<h1>{{ plan.title}}</h1>
-<p>{{ plan.text }}</p>
+    <h1 class="text-center mb-4 mt-5">{{ plan.title}}</h1>
+    <div class="text-right">
+        <p class="text-muted">{{ plan.date }}</p>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <p class="bd-lead">
+                “To ensure good health: eat lightly, breathe deeply, live moderately, cultivate cheerfulness, and maintain an interest in life.” -William Londen
+            </p>
+        </div>
+        <div class="col-9">
+            {% if plan.image %}
+                <div class="text-center">
+                    <img class="col-md-11 col-sm-8 rounded pb-1" src="{{ plan.image.url }}" alt="{{ plan.image.url }}">
+                    <p class="text-muted pb-4">{{plan.image_credit}}</p>
+                </div>
+            {% endif %}
+            <p>{{ plan.text|safe }}</p>
+            {% if plan.video %}
+            <div class="text-center">
+                <object style="height: 390px; width: 640px">
+                    <param name="movie" value="{{ plan.video }}">
+                    <param name="allowFullScreen" value="true">
+                    <param name="allowScriptAccess" value="always">
+                    <embed src="{{ plan.video }}" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="640" height="390">  
+                </object>
+                <p class="text-muted">{{ plan.video_credit }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>  
 </div>
 {% endblock %}

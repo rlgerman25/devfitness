@@ -17,17 +17,39 @@
   <a href="{% url 'join' %}"><button type="button" class="btn btn-lg btn-info">Get Premium</button></a>
 </div>
 
+<!-- Articles section -->
 <div class="justify-content-center">
   <div class="container">
-
-    <h3>Articles & Lifestile</h3>
-    <ul>
+    <h3 style="text-align: center; padding-bottom: 1.5rem;">Articles & Lifestile</h3>
+    <div class="card-columns col-xs-6">
       {% for plan in plans.all %}
-  
-      <li><a href="{% url 'plan' plan.id %}">{{ plan.title }}</a></li>
-  
+        <div class="card">
+          {% if plan.image %}
+            <a href="{% url 'plan' plan.id %}">
+              <img class="card-img-top" src="{{ plan.image.url }}" alt="{{ plan.image.image_credit }}">
+            </a>  
+              {% endif %}  
+          <div class="card-body">
+            <h5 style="margin-top: -5px; text-decoration: none;" class="card-title text-info"><a href="{% url 'plan' plan.id %}">{{ plan.title }}</a></h5>
+            <p class="card-text" id="card_description_text"> {{ plan.text|striptags|truncatechars:80  }} </p>
+            <p style="margin-top: -10px; margin-bottom: -5px;" class="card-text"><small class="text-muted">Published on {{ plan.date }}</small></p>
+            {% if plan.premium %}
+              <p style="margin-top: -5px; margin-bottom: -10px;" class="text-right text-info" ><small> Premium </small></p>
+            {% endif %}
+            </div>
+        </div>
       {% endfor %}
-    </ul>
+      <div class="card border-info p-3">
+        <blockquote class="blockquote mb-0">
+          <p>In a world where many people look for excuses not to work hard, I want to work hard inspite of the excuses.</p>
+          <footer class="blockquote-footer">
+            <small>
+               <cite title="Source Title">Ronard Luna</cite>
+            </small>
+          </footer>
+        </blockquote>
+      </div>
+    </div>
   </div>
 </div>
 

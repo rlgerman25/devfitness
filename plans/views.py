@@ -11,7 +11,7 @@ from django.http import HttpResponse
 stripe.api_key = 'sk_test_51ITpKBDznegpUcupyUdBtFAujprxB18R5wd2puTcOkfQus4R06AiHhsg6GAHmxHH3BszES61BN9bcvfPjnh9cSDs003db5cL09'
 
 def home(request):
-    plans = FitnessPlan.objects
+    plans = FitnessPlan.objects.all()
     return render(request, 'plans/home.html', {'plans':plans})
 
 def plan(request,pk):
