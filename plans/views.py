@@ -6,7 +6,9 @@ from .models import FitnessPlan, Customer
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 import stripe
+import random
 from django.http import HttpResponse
+from .all_quotes import quote_list
 
 stripe.api_key = 'sk_test_51ITpKBDznegpUcupyUdBtFAujprxB18R5wd2puTcOkfQus4R06AiHhsg6GAHmxHH3BszES61BN9bcvfPjnh9cSDs003db5cL09'
 
@@ -14,7 +16,10 @@ def home(request):
     plans = FitnessPlan.objects.all()
     return render(request, 'plans/home.html', {'plans':plans})
 
-def plan(request,pk):
+def plan(request,pk):   
+    quote = str(random.choice(quote_list))
+    print(quote)
+
     plan = get_object_or_404(FitnessPlan, pk=pk)
     if plan.premium:
         # Checks - Is there an authneticated user?
@@ -23,13 +28,13 @@ def plan(request,pk):
                 # Does user have a membership? It is now true
                 # cause of the line below, instantiation of user
                 if request.user.customer.membership:
-                    return render(request, 'plans/plan.html', {'plan':plan})
+                    return render(request, 'plans/plan.html', {'plan':plan, 'quote': quote})
             # This except checks specifically if customer doesn't exists
             except Customer.DoesNotExist:
                 return redirect('join')    
         return redirect('join')
     else:
-        return render(request, 'plans/plan.html', {'plan':plan})
+        return render(request, 'plans/plan.html', {'plan':plan, 'quote': quote})
 
 def join(request):
     return render(request, 'plans/join.html')
