@@ -1,5 +1,20 @@
 {% extends 'plans/base.html' %}
 {% block content %}
+<style>
+.videoWrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  align-items: center;
+}
+.videoWrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+</style>
 
 <div class="container">
     <h1 class="text-center mb-4 mt-5">{{ plan.title}}</h1>
@@ -21,12 +36,9 @@
             {% if plan.video %}
                 <div class="container">
                     <div class="text-center">
-                        <object style="height: 390px; width: 640px">
-                            <param name="movie" value="{{ plan.video }}">
-                            <param name="allowFullScreen" value="true">
-                            <param name="allowScriptAccess" value="always">
-                            <embed src="{{ plan.video }}" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always">  
-                        </object>
+                        <div class="videoWrapper">
+                            <iframe width="560" height="390" src="{{ plan.video }}" title="{{ plan.video_credit }}" frameborder="0" allowfullscreen></iframe>
+                        </div>
                         <p class="text-muted">{{ plan.video_credit }}</p>
                     </div>
                 </div>
